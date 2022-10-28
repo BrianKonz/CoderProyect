@@ -1,0 +1,46 @@
+<h3 class="m-4">Agregar Curso</h3>
+
+<form [formGroup]="formAgregarCurso" (ngSubmit)="agregarCurso()">
+    <div class="row m-4">
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill" >
+                <mat-label>Nombre del Curso</mat-label>
+                <input matInput type="text" formControlName="nombre">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Comisión</mat-label>
+                <input matInput type="text" formControlName="comision">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Profesor</mat-label>
+                <input matInput type="text" formControlName="profesor">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Fecha Inicio</mat-label>
+                <input matInput [matDatepicker]="fechaInicio" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                <mat-datepicker #fechaInicio></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Fecha Fin</mat-label>
+                <input matInput [matDatepicker]="fechaFin" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                <mat-datepicker #fechaFin></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+        <mat-slide-toggle formControlName="inscripcionAbierta">Inscripción Abierta</mat-slide-toggle>
+        </div>
+
+        <button mat-raised-button color="primary" class="col-md-3 m-2" type="submit">Agregar Curso</button>
+
+    </div>
+</form>
