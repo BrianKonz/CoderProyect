@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Curso } from '../models/curso.interface';
+import { Curso } from '../cursos/models/curso.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class CursoService {
   private cursos: Curso [] = [
 

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Curso } from 'src/app/models/curso.interface';
+import { Curso } from 'src/app/cursos/models/curso.interface';
 import { CursoService } from 'src/app/services/curso.service';
+
+
 
 @Component({
   selector: 'app-lista-cursos',

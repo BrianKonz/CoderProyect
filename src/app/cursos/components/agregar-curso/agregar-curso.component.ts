@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Curso } from 'src/app/models/curso.interface';
+import { Curso } from 'src/app/cursos/models/curso.interface';
 import { CursoService } from 'src/app/services/curso.service';
+
 
 @Component({
   selector: 'app-agregar-curso',
