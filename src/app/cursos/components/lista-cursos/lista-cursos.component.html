@@ -12,15 +12,15 @@
 
             <mat-card-content>
                 <p>Profesor: {{ curso.profesor }}</p>
-                <p>Inicia el: {{ curso.fechaInicio | date: 'dd/mm/yyyy' }}</p>
-                <p>Finaliza el: {{ curso.fechaFin | date: 'dd/mm/yyyy' }}</p>
+                <p>Inicia el: {{ curso.fechaInicio | date: 'dd/MM/YYYY' }}</p>
+                <p>Finaliza el: {{ curso.fechaFin | date: 'dd/MM/YYYY' }}</p>
             </mat-card-content>
             
             <mat-card-actions align="end">
-                <button mat-icon-button color="primary">
+                <button mat-icon-button color="primary" (click)="editarCurso(curso)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="warn">
+                <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-card-actions>

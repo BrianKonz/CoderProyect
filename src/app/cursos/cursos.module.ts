@@ -7,9 +7,10 @@ import { EditarCursoComponent } from './components/editar-curso/editar-curso.com
 import { ListaCursosComponent } from './components/lista-cursos/lista-cursos.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AutenticacionModule } from '../autenticacion/autenticacion.module';
 import { MaterialModule } from '../material.module';
-import { CursoService } from '../services/curso.service';
+import { CursoService } from './services/curso.service';
+import { CursosInicioComponent } from './components/cursos-inicio/cursos-inicio.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,6 +19,7 @@ import { CursoService } from '../services/curso.service';
     ListaCursosComponent,
     AgregarCursoComponent,
     EditarCursoComponent,
+    CursosInicioComponent,
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,9 @@ import { CursoService } from '../services/curso.service';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    AutenticacionModule,
+    CursosRoutingModule,
+    SharedModule,
+
   ],
   providers: [
     CursoService

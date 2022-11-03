@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Curso } from '../cursos/models/curso.interface';
+import { Curso } from '../models/curso.interface';
 
 
 @Injectable()
@@ -61,10 +61,22 @@ export class CursoService {
   }
 
   editarCurso(curso: Curso) {
-    
+    let indice = this.cursos.findIndex((c: Curso) => c.id === curso.id)
+
+    if(indice > -1) {
+      this.cursos[indice] = curso;
+    }
+
+    this.cursosSubject.next(this.cursos);
   }
 
-  eliminarCurso(id: number) {
-    
+  eliminarCursos(id: number) {
+    let indice = this.cursos.findIndex((c: Curso) => c.id == id)
+
+    if(indice > -1) {
+      this.cursos.splice(indice, 1)
+    }
+
+    this.cursosSubject.next(this.cursos);
   }
 }
