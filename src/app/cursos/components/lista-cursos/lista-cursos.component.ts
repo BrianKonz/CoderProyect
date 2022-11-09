@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Curso } from 'src/app/cursos/models/curso.interface';
+import { Curso } from 'src/app/models/curso.interface';
 import { CursoService } from 'src/app/cursos/services/curso.service';
+import { SesionService } from 'src/app/core/services/sesion.service';
+import { Sesion } from 'src/app/models/sesion.interface';
 
 
 
@@ -13,14 +15,17 @@ import { CursoService } from 'src/app/cursos/services/curso.service';
 })
 export class ListaCursosComponent implements OnInit {
   cursos$!: Observable<Curso[]>
+  sesion$!: Observable<Sesion>;
 
   constructor(
     private cursoService: CursoService,
-    private router: Router
+    private router: Router,
+    private sesionService: SesionService
   ) { }
 
   ngOnInit(): void {
     this.cursos$ = this.cursoService.obtenerCursos();
+    this.sesion$ = this.sesionService.obtenerSesion()
   }
 
   eliminarCurso(id: number) {
@@ -35,7 +40,8 @@ export class ListaCursosComponent implements OnInit {
       profesor: curso.profesor,
       fechaInicio: curso.fechaInicio,
       fechaFin: curso.fechaFin,
-      inscrpcionAbierta: curso.inscripcionAbierta
+      inscripcionAbierta: curso.inscripcionAbierta,
+      imagen: curso.imagen
     }])
   }
 

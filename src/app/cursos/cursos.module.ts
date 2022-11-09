@@ -11,6 +11,7 @@ import { MaterialModule } from '../material.module';
 import { CursoService } from './services/curso.service';
 import { CursosInicioComponent } from './components/cursos-inicio/cursos-inicio.component';
 import { SharedModule } from '../shared/shared.module';
+import { DetalleCursoComponent } from './components/detalle-curso/detalle-curso.component';
 
 
 
@@ -20,16 +21,13 @@ import { SharedModule } from '../shared/shared.module';
     AgregarCursoComponent,
     EditarCursoComponent,
     CursosInicioComponent,
+    DetalleCursoComponent,
   ],
   imports: [
     CommonModule,
-    CursosRoutingModule,
-    BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule,
     CursosRoutingModule,
-    SharedModule,
-
+    ReactiveFormsModule,
   ],
   providers: [
     CursoService

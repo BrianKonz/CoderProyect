@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AutenticacionModule } from './autenticacion/autenticacion.module';
 import { CursosModule } from './cursos/cursos.module';
 import { CoreModule } from './core/core.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -13,11 +14,9 @@ import { CoreModule } from './core/core.module';
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AutenticacionModule,
-    CursosModule,
-    CoreModule,
   ],
   providers: [
   ],

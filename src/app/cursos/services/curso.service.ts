@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Curso } from '../models/curso.interface';
+import { Curso } from '../../models/curso.interface';
 
 
 @Injectable()
@@ -49,9 +49,9 @@ export class CursoService {
     return this.cursosSubject.asObservable();
   }
 
-  obtenercurso(id: number): Observable<Curso[]> {
+  obtenercurso(id: number): Observable<Curso> {
     return this.obtenerCursos().pipe(
-      map((cursos: Curso[]) => cursos.filter((curso: Curso) => curso.id == id)) 
+      map((cursos: Curso[]) => cursos.filter((curso: Curso) => curso.id === id)[0]) 
     )
   }
 

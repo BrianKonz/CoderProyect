@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Curso } from '../../models/curso.interface';
+import { Curso } from '../../../models/curso.interface';
 import { CursoService } from '../../services/curso.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { CursoService } from '../../services/curso.service';
 export class EditarCursoComponent implements OnInit {
 
   formEditarCurso!: FormGroup;
-  id!: number;
+  curso!: Curso;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -24,14 +24,26 @@ export class EditarCursoComponent implements OnInit {
   ngOnInit(): void {
     //paramMap es un observable al cual me puedo suscribir
     this.activatedRoute.paramMap.subscribe((parametros) => {
-      this.id = parseInt(parametros.get('id') || '0');
+
+      this.curso = {
+        id: parseInt(parametros.get('id') || '0'),
+        nombre: parametros.get('nombre') || '',
+        comision: parametros.get('comision') || '',
+        profesor: parametros.get('profesor') || '',
+        fechaInicio: new Date(parametros.get('fechaInicio') || ''),
+        fechaFin: new Date (parametros.get('fechaFin') || ''),
+        inscripcionAbierta: parametros.get('inscripcionAbierta') === 'true',
+        imagen: parametros.get('imagen') || '',
+      }
+
       this.formEditarCurso = new FormGroup ( {
-        nombre: new FormControl(parametros.get('nombre'), [Validators.required]),
-        comision: new FormControl(parametros.get('comision'), [Validators.required]),
-        profesor: new FormControl(parametros.get('profesor'), [Validators.required]),
-        fechaInicio: new FormControl(parametros.get('fechaInicio'), [Validators.required]),
-        fechaFin: new FormControl(parametros.get('fechaFin'), [Validators.required]),
-        inscripcionAbierta: new FormControl(parametros.get('inscripcionAbierta')),
+        nombre: new FormControl(this.curso.nombre, [Validators.required]),
+        comision: new FormControl(this.curso.comision, [Validators.required]),
+        profesor: new FormControl(this.curso.profesor, [Validators.required]),
+        fechaInicio: new FormControl(this.curso.fechaInicio, [Validators.required]),
+        fechaFin: new FormControl(this.curso.fechaFin, [Validators.required]),
+        inscripcionAbierta: new FormControl(this.curso.inscripcionAbierta),
+        imagen: new FormControl(this.curso.imagen)
       });
 
 
@@ -48,8 +60,8 @@ export class EditarCursoComponent implements OnInit {
       fechaInicio: this.formEditarCurso.value.fechaInicio,
       fechaFin: this.formEditarCurso.value.fechaFin,
       inscripcionAbierta: this.formEditarCurso.value.inscripcionAbierta,
-      imagen: '',
-      id: this.id
+      imagen: this.curso.imagen,
+      id: this.curso.id
     }
     this.cursoService.editarCurso(c);
     this.router.navigate(['cursos/listar'])
