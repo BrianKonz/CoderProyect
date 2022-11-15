@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Error404Component } from '../core/components/error404/error404.component';
 import { AdminGuard } from '../core/guards/admin.guard';
-import { AutenticacionGuard } from '../core/guards/autenticacion.guard';
 import { AgregarCursoComponent } from './components/agregar-curso/agregar-curso.component';
 import { CursosInicioComponent } from './components/cursos-inicio/cursos-inicio.component';
 import { DetalleCursoComponent } from './components/detalle-curso/detalle-curso.component';

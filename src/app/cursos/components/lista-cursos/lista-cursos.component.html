@@ -1,9 +1,17 @@
-<h1>Listado de Cursos</h1>
+<h1 class="m-4">Listado de Cursos</h1>
 <ng-container *ngIf="sesion$ | async as sesion">
 <div class="row">
+    
+    <div>
+        <mat-form-field class="col-md-6 m-4">
+            <mat-label>Filtrar por Curso</mat-label>
+            <input type="text" matInput [(ngModel)]="filtro" (keyup)="filtroCurso()" >
+        </mat-form-field>
+    </div>
+
 <div *ngFor="let curso of cursos$ | async" class="col-md-3 m-4">
     <div>
-        <mat-card>
+        <mat-card >
             <mat-card-header>
                 <mat-card-title>{{ curso.nombre }}</mat-card-title>
                 <mat-card-subtitle>{{ curso.comision }}</mat-card-subtitle>   
@@ -15,6 +23,7 @@
                 <p>Profesor: {{ curso.profesor }}</p>
                 <p>Inicia el: {{ curso.fechaInicio | date: 'dd/MM/YYYY' }}</p>
                 <p>Finaliza el: {{ curso.fechaFin | date: 'dd/MM/YYYY' }}</p>
+                <p [appBooleanStyle]="curso.inscripcionAbierta"> {{ curso.inscripcionAbierta | booleanToText: 'Inscripción Abierta' : 'Inscripción Cerrada'}}</p>
             </mat-card-content>
             
             <mat-card-actions align="end">

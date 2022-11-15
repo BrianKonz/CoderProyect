@@ -1,0 +1,42 @@
+<h3 class="m-4">Editar Alumno</h3>
+
+<form [formGroup]="formEditarAlumno" (ngSubmit)="editarAlumno()">
+    <div class="row m-4">
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill" >
+                <mat-label>Nombre del Alumno</mat-label>
+                <input matInput type="text" formControlName="usuario">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Apellido</mat-label>
+                <input matInput type="text" formControlName="apellido">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Edad</mat-label>
+                <input matInput type="text" formControlName="edad">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>contrasena</mat-label>
+                <input matInput type="text" formControlName="contrasena">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Curso</mat-label>
+                <input matInput type="text" formControlName="curso">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+        <mat-slide-toggle formControlName="admin">¿Es Admin?</mat-slide-toggle>
+        </div>
+        
+        <button mat-raised-button color="primary" class="col-md-3 m-2" type="submit">Editar Alumno</button>
+
+    </div>
+</form>

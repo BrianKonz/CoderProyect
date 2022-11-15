@@ -1,82 +1,68 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Curso } from '../../models/curso.interface';
 
 
 @Injectable()
 export class CursoService {
-  private cursos: Curso [] = [
 
-    {
-      id: 0,
-      nombre: 'Angular',
-      comision: '32310',
-      profesor: 'Keven',
-      fechaInicio: new Date(2022, 0, 1),
-      fechaFin: new Date(2022, 1, 28),
-      inscripcionAbierta: true,
-      imagen: 'https://parentesis.com/imagesPosts/coder00.jpg',
-    },
-    {
-      id: 1,
-      nombre: 'Java',
-      comision: '33411',
-      profesor: 'Pedro',
-      fechaInicio: new Date(2022, 4, 1),
-      fechaFin: new Date(2022, 5, 28),
-      inscripcionAbierta: false,
-      imagen: 'https://parentesis.com/imagesPosts/coder00.jpg',
-    },
-    {
-      id: 2,
-      nombre: 'Angular',
-      comision: '34512',
-      profesor: 'Santiago',
-      fechaInicio: new Date(2022, 8, 1),
-      fechaFin: new Date(2022, 9, 28),
-      inscripcionAbierta: false,
-      imagen: 'https://parentesis.com/imagesPosts/coder00.jpg',
-    },
-
-  ]
-  private cursosSubject: BehaviorSubject<Curso[]> = new BehaviorSubject(this.cursos);
-
-  constructor() { 
-    this.cursosSubject = new BehaviorSubject<Curso[]>(this.cursos);
+  constructor(
+    private http: HttpClient
+  ) { 
+    
   }
 
   obtenerCursos(): Observable<Curso[]> {
-    return this.cursosSubject.asObservable();
+   return this.http.get<Curso[]>(`${environment.api}/Cursos`, {
+    headers: new HttpHeaders({
+      'content-type': 'application/json',
+      'encoding': 'UTF-8'
+    })
+   })
   }
 
   obtenercurso(id: number): Observable<Curso> {
-    return this.obtenerCursos().pipe(
-      map((cursos: Curso[]) => cursos.filter((curso: Curso) => curso.id === id)[0]) 
-    )
+    return this.http.get<Curso>(`${environment.api}/Cursos/${id}`, {
+    headers: new HttpHeaders({
+      'content-type': 'application/json',
+      'encoding': 'UTF-8'
+    })
+   }).pipe(
+    catchError(this.manejarError)
+   )
   }
 
   agregarCurso(curso: Curso) {
-    this.cursos.push(curso);
-    this.cursosSubject.next(this.cursos)
+    this.http.post(`${environment.api}/Cursos/`, curso, {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'encoding': 'UTF-8'
+      })
+     }).pipe(
+      catchError(this.manejarError)
+     ).subscribe()
   }
 
   editarCurso(curso: Curso) {
-    let indice = this.cursos.findIndex((c: Curso) => c.id === curso.id)
-
-    if(indice > -1) {
-      this.cursos[indice] = curso;
-    }
-
-    this.cursosSubject.next(this.cursos);
+    this.http.put(`${environment.api}/Cursos/${curso.id}`, curso).pipe(
+      catchError (this.manejarError)
+    ).subscribe()
   }
 
   eliminarCursos(id: number) {
-    let indice = this.cursos.findIndex((c: Curso) => c.id == id)
+    this.http.delete<Curso>(`${environment.api}/Cursos/${id}`).pipe(
+      catchError (this.manejarError)
+    ).subscribe()
+}
 
-    if(indice > -1) {
-      this.cursos.splice(indice, 1)
-    }
-
-    this.cursosSubject.next(this.cursos);
+private manejarError(error: HttpErrorResponse) {
+  if (error.error instanceof ErrorEvent){
+    console.warn('Error del lado del cliente: ', error.error.message)
+  }else {
+    console.warn('Error del lado del servidor: ', error.error.message)
   }
+  return throwError(() => new Error('Error en la comunicación Http'))
+}
 }

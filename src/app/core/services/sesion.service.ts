@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Sesion } from 'src/app/models/sesion.interface';
 import { BehaviorSubject, Observable } from 'rxjs'
+import { Usuario } from 'src/app/models/usuario.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,11 @@ export class SesionService {
 
    }
 
-  login(usuario: string, contrasena: string, admin: boolean){
+  login(usuario: Usuario){
     const sesion: Sesion = {
       sesionActiva: true,
-      usuarioActivo: {
-        usuario: usuario,
-        contrasena: contrasena,
-        admin: admin,
-      }
+      usuarioActivo: usuario,
+      
     }
 
       this.sesionSubject.next(sesion);

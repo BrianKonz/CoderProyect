@@ -13,6 +13,12 @@ const routes: Routes = [
 
   { path: 'autenticacion',
     loadChildren: () => import('./autenticacion/autenticacion.module').then((m) => m.AutenticacionModule)},
+
+  { path: 'usuarios',
+    loadChildren: () => import('./usuarios/usuarios.module').then((m) => m.UsuariosModule),
+    canActivate: [AutenticacionGuard]
+  },
+
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },  
   
   { path: '**', component:Error404Component }

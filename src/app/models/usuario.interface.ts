@@ -1,5 +1,9 @@
 export interface Usuario {
-    usuario: string,
-    contrasena: string, 
-    admin: boolean
+    id: number,
+    usuario: string;
+    contrasena: string;
+    admin?: boolean;
+    apellido: string;
+    edad: number;
+    curso: string;
 }

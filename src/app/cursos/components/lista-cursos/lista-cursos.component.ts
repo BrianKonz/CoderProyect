@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Curso } from 'src/app/models/curso.interface';
 import { CursoService } from 'src/app/cursos/services/curso.service';
 import { SesionService } from 'src/app/core/services/sesion.service';
@@ -16,6 +16,7 @@ import { Sesion } from 'src/app/models/sesion.interface';
 export class ListaCursosComponent implements OnInit {
   cursos$!: Observable<Curso[]>
   sesion$!: Observable<Sesion>;
+  filtro:  string = '';
 
   constructor(
     private cursoService: CursoService,
@@ -30,6 +31,7 @@ export class ListaCursosComponent implements OnInit {
 
   eliminarCurso(id: number) {
     this.cursoService.eliminarCursos(id);
+    this.cursos$ = this.cursoService.obtenerCursos();
   }
 
   editarCurso(curso: Curso) {
@@ -43,6 +45,13 @@ export class ListaCursosComponent implements OnInit {
       inscripcionAbierta: curso.inscripcionAbierta,
       imagen: curso.imagen
     }])
+  }
+
+  filtroCurso () {
+    
+    this.cursos$=this.cursoService.obtenerCursos().pipe(
+      map((cursos: Curso[]) => cursos.filter((curso: Curso) => 
+      curso.nombre.toLocaleLowerCase().includes(this.filtro.toLocaleLowerCase()))))
   }
 
 }

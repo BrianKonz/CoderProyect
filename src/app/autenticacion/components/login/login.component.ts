@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SesionService } from 'src/app/core/services/sesion.service';
+import { Usuario } from 'src/app/models/usuario.interface';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
     this.formAut = new FormGroup({
       usuario: new FormControl(),
       contrasena: new FormControl(),
-      admin: new FormControl()
+      admin: new FormControl(),
     }) 
    }
 
@@ -26,7 +27,16 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.sesionService.login(this.formAut.value.usuario, this.formAut.value.contrasena, this.formAut.value.admin)
+    let usuario: Usuario = {
+      id: 0,
+      usuario: this.formAut.value.usuario,
+      contrasena: this.formAut.value.contrasena,
+      admin: this.formAut.value.admin,
+      edad: this.formAut.value.edad,
+      apellido: this.formAut.value.apellido,
+      curso: this.formAut.value.curso
+    }
+    this.sesionService.login(usuario)
     this.router.navigate(['inicio'])
   }
 

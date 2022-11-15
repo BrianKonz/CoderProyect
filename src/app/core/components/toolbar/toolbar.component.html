@@ -5,9 +5,11 @@
       <h3>Angular Proyect {{ sesion.usuarioActivo?.usuario }}</h3>
       <div class="espacio"></div>
       <a mat-button routerLink="inicio">Inicio</a> 
-      <a mat-button routerLink="autenticacion">Login</a>
+      <a mat-button routerLink="autenticacion" *ngIf="!sesion.sesionActiva">Login</a>
       <a mat-button routerLink="cursos/listar">Lista Cursos</a>
       <a mat-button routerLink="cursos/agregar" *ngIf="sesion.usuarioActivo?.admin">Nuevo Cursos</a>
+      <a mat-button routerLink="usuarios/agregarUsuario" *ngIf="sesion.usuarioActivo?.admin">Nuevo Alumnos</a>
+      <a mat-button routerLink="usuarios/listarUsuario">Estudiantes</a>
     </mat-toolbar>
   </div>
 
