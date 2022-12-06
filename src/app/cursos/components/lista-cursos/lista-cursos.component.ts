@@ -5,8 +5,9 @@ import { Curso } from 'src/app/models/curso.interface';
 import { CursoService } from 'src/app/cursos/services/curso.service';
 import { SesionService } from 'src/app/core/services/sesion.service';
 import { Sesion } from 'src/app/models/sesion.interface';
-
-
+import { AppState } from 'src/app/state/app.state';
+import { Store } from '@ngrx/store';
+import { selectorCursosCargados } from 'src/app/state/selectors/cursos.selector';
 
 @Component({
   selector: 'app-lista-cursos',
@@ -21,12 +22,15 @@ export class ListaCursosComponent implements OnInit {
   constructor(
     private cursoService: CursoService,
     private router: Router,
-    private sesionService: SesionService
-  ) { }
+    private sesionService: SesionService,
+    private store: Store<AppState>
+  ) {
+   }
 
   ngOnInit(): void {
-    this.cursos$ = this.cursoService.obtenerCursos();
-    this.sesion$ = this.sesionService.obtenerSesion()
+    this.cursos$ = this.store.select(selectorCursosCargados)
+    this.sesion$ = this.sesionService.obtenerSesion();
+    
   }
 
   eliminarCurso(id: number) {
