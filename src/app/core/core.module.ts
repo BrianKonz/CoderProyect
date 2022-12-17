@@ -6,6 +6,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SesionService } from './services/sesion.service';
 import { MaterialModule } from '../material.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { reducer, sesionFeatureKey } from './state/sesion.reducer';
 
 
 
@@ -19,6 +21,7 @@ import { AppRoutingModule } from '../app-routing.module';
     CommonModule,
     MaterialModule,
     AppRoutingModule,
+    StoreModule.forFeature(sesionFeatureKey, reducer),
   ],
   exports: [
     ToolbarComponent,

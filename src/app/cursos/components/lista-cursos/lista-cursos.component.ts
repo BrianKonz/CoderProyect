@@ -1,36 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Curso } from 'src/app/models/curso.interface';
 import { CursoService } from 'src/app/cursos/services/curso.service';
 import { SesionService } from 'src/app/core/services/sesion.service';
 import { Sesion } from 'src/app/models/sesion.interface';
-import { AppState } from 'src/app/state/app.state';
+import { CursoState } from 'src/app/models/cursos.state';
 import { Store } from '@ngrx/store';
-import { selectorCursosCargados } from 'src/app/state/selectors/cursos.selector';
+import { loadCursos, loadCursosSuccess } from '../../state/cursos.actions';
+import { selectStateCargando, selectStateCursos } from '../../state/cursos.selectors';
+import { Usuario } from 'src/app/models/usuario.interface';
+import { selectSesionActiva } from 'src/app/core/state/sesion.selectors';
 
 @Component({
   selector: 'app-lista-cursos',
   templateUrl: './lista-cursos.component.html',
   styleUrls: ['./lista-cursos.component.css']
 })
-export class ListaCursosComponent implements OnInit {
-  cursos$!: Observable<Curso[]>
+export class ListaCursosComponent implements OnInit, OnDestroy {
+  cursos$!: Observable<Curso[]>;
   sesion$!: Observable<Sesion>;
+  cargando$!: Observable<boolean>;
   filtro:  string = '';
+  suscripcionCursos!: Subscription;
 
   constructor(
     private cursoService: CursoService,
     private router: Router,
     private sesionService: SesionService,
-    private store: Store<AppState>
+    private store: Store<CursoState>,
+    private storeUsuario: Store<Usuario>
   ) {
    }
 
   ngOnInit(): void {
-    this.cursos$ = this.store.select(selectorCursosCargados)
-    this.sesion$ = this.sesionService.obtenerSesion();
+      this.suscripcionCursos = this.cursoService.obtenerCursos().subscribe((cursos: Curso[]) => {
+      this.store.dispatch(loadCursosSuccess({cursos}));
+    });
+    this.cursos$ = this.store.select(selectStateCursos)
+    this.cargando$ = this.store.select(selectStateCargando)
+    this.sesion$ = this.storeUsuario.select(selectSesionActiva)
     
+  }
+
+  ngOnDestroy(): void {
+    this.suscripcionCursos.unsubscribe();
   }
 
   eliminarCurso(id: number) {

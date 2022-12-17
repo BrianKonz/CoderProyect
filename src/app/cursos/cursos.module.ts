@@ -14,6 +14,10 @@ import { SharedModule } from '../shared/shared.module';
 import { DetalleCursoComponent } from './components/detalle-curso/detalle-curso.component';
 import { BooleanToTextPipe } from '../pipes/boolean-to-text.pipe';
 import { BooleanStyleDirective } from '../directives/boolean-style.directive';
+import { StoreModule } from '@ngrx/store';
+import { cursosFeatureKey, reducer } from './state/cursos.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -32,6 +36,8 @@ import { BooleanStyleDirective } from '../directives/boolean-style.directive';
     CursosRoutingModule,
     SharedModule,
     FormsModule,
+    StoreModule.forFeature(cursosFeatureKey, reducer),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     CursoService

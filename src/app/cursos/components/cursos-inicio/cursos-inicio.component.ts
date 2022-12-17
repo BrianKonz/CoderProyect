@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Curso } from 'src/app/models/curso.interface';
-import { cargarCursos, cursosCargados } from 'src/app/state/actions/cursos.action';
-import { AppState } from 'src/app/state/app.state';
-import { CursoService } from '../../services/curso.service';
+import { CursoState } from 'src/app/models/cursos.state';
+import { loadCursos } from '../../state/cursos.actions';
+
+
 
 @Component({
   selector: 'app-cursos-inicio',
@@ -13,17 +13,13 @@ import { CursoService } from '../../services/curso.service';
 export class CursosInicioComponent implements OnInit {
 
   constructor(
-    private cursosService: CursoService,
-    private store: Store<AppState>
+    private store: Store<CursoState>
   ) { 
-    this.store.dispatch(cargarCursos());
+   
   }
 
   ngOnInit(): void {
-    this.cursosService.obtenerCursos().subscribe((cursos: Curso[]) => {
-      this.store.dispatch(cursosCargados({ cursos: cursos }))
-      console.log('se agregaron los cursos al store')
-    })
+    this.store.dispatch(loadCursos());
   }
 
 }
